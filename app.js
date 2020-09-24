@@ -1,12 +1,16 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
+const ProductController = require('./controllers/productDetails.controller'); 
+const productDetails = new ProductController();
 
 var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/getProductCategoryDetails', productDetails.getProductDetailsByCategory);
 
 app.listen(8000);
 console.log("port is listening on 8000");
