@@ -10,7 +10,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/getProductCategoryDetails', productDetails.getProductDetailsByCategory);
+app.get('/getProductDetails', productDetails.getAllProductDetails);
+app.get('/getProductByCategory/:category', productDetails.getProductByCategory);
+app.post('/updateProductAvailability', productDetails.updateProductAvailibility);
 
 app.listen(8000);
 console.log("port is listening on 8000");
