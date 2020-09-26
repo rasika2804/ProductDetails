@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/getProductDetails', productDetails.getAllProductDetails);
 app.get('/getProductByCategory/:category', productDetails.getProductByCategory);
-app.post('/updateProductAvailability', productDetails.updateProductAvailibility);
+app.put('/updateProductAvailability', productDetails.updateProductAvailibility);
 app.post('/addNewProduct', productDetails.addProductByCategory);
 app.delete('/deleteProduct/:product_name', productDetails.deleteProduct);
 
