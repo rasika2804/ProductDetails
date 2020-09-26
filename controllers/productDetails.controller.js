@@ -35,13 +35,49 @@ class ProductContoller {
     //Update Product by category
     async updateProductAvailibility(request, response){
         try {
-            let availibility = request.body.availability;
-            let product_name = request.body.product_name;
+            const availibility = request.body.availability;
+            const product_name = request.body.product_name;
             const result = await productDetails.updateProductByAvailibility(availibility, product_name);
             console.log(result);
             response.send({
                result
             })
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
+    //add new Product
+    async addProductByCategory(request, response){
+        try {
+            const category_name = request.body.category_name;
+            const availibility = request.body.availability;
+            const product_name = request.body.product_name;
+            const result = await productDetails.addNewProductByCategory(category_name, availibility, product_name);
+            console.log(result);
+            response.send({
+                result
+            });
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
+    async deleteProduct(request, response){
+        try {
+            const product_name = request.params.product_name;
+            const result = await productDetails.deleteProductDetails(product_name);
+            if(result){
+                response.send({
+                    message: "product details deleted successfully"
+                })
+            } else {
+                response.send({
+                    message: "Something went wrong"
+                })
+            }
         } catch (error) {
             console.log(error);
             throw error;

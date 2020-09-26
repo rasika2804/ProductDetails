@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/getProductDetails', productDetails.getAllProductDetails);
 app.get('/getProductByCategory/:category', productDetails.getProductByCategory);
 app.post('/updateProductAvailability', productDetails.updateProductAvailibility);
+app.post('/addNewProduct', productDetails.addProductByCategory);
+app.delete('/deleteProduct/:product_name', productDetails.deleteProduct);
 
 app.listen(8000);
 console.log("port is listening on 8000");

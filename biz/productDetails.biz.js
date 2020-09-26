@@ -34,6 +34,28 @@ class ProductDetailsBiz {
             }
         })
     }
+
+    addNewProductByCategory(category_name, availability, product_name){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await productRepo.addNewProductByCategory(category_name, availability, product_name);
+                return resolve(result);
+            } catch (error) {
+                return reject(error);
+            }
+        })
+    }
+
+    deleteProductDetails(product_name){
+        return new Promise(async (resolve, reject) =>{
+            try {
+                const result = await productRepo.deleteProductDetails(product_name);
+                return resolve(result);
+            } catch (error) {
+                return reject(error);
+            }
+        })
+    }
 }
 
 module.exports = ProductDetailsBiz;

@@ -72,6 +72,20 @@ class ProductRepo {
         })
     }
 
+    getCategoryIdByName(category_name){
+        return new Promise(async (resolve, reject) => {
+            try {
+                connection.query(`select category_id from product_category where category_name = ?`, [category_name], (err, rows) => {
+                    if(err) throw err;
+                    return resolve(rows[0].category_id);
+                })
+            } catch (error) {
+                console.log(error);
+                return reject(error);
+            }
+        })
+    }
+
     updateProductByAvailibility(availibility, product_name) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -81,6 +95,42 @@ class ProductRepo {
                         return resolve("Product availability updated successfully...");
                     } else {
                         return reject(error);
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+                return reject(error);
+            }
+        })
+    }
+
+    addNewProductByCategory(category_name, availability, product_name){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const category_id = await this.getCategoryIdByName(category_name);
+                connection.query(`insert into products(category_id, prd_name, availibility) values(?,?,?)`,[category_id, product_name, availability], (err, result) => {
+                    if(!err){
+                        return resolve("New Product added successfully...");
+                    } else {
+                        return reject(err);
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+                return reject(error);
+            }
+        })
+    }
+
+    deleteProductDetails(product_name){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const product_id = await this.getProductByName(product_name);
+                connection.query(`delete from products where prd_id = ?`, [product_id], (err, result) => {
+                    if(!err){
+                        return resolve(true);
+                    } else {
+                        return reject(err)
                     }
                 })
             } catch (error) {
