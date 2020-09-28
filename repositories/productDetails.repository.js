@@ -38,14 +38,13 @@ class ProductRepo {
         })
     }
 
-    getProductByCategory(category_type) {
+    getProductByCategory() {
         return new Promise(async (resolve, reject) => {
             try {
-                connection.query(`select p.prd_name, p.availibility,c.category_name
+                connection.query(`select p.prd_name, p.availibility,c.category_id,c.category_name
                 from products p
                 left join product_category c 
-                on p.category_id = c.category_id
-                where c.category_name = ?`, [category_type], (err, rows) => {
+                on p.category_id = c.category_id`, (err, rows) => {
                     if(err) throw err;
                     console.log("category data successfully fetched");
                     console.log(rows);
@@ -131,6 +130,55 @@ class ProductRepo {
                         return resolve(true);
                     } else {
                         return reject(err)
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+                return reject(error);
+            }
+        })
+    }
+
+    getCategoryDetails(){
+        return new Promise(async (resolve, reject) => {
+            try {
+                connection.query(`select * from product_category`, (err, rows) => {
+                    if(err) throw err;
+                    console.log("category details fetched successfully");
+                    return resolve(rows);
+                })
+            } catch (error) {
+                console.log(error);
+                return reject(error);
+            }
+        })
+    } 
+    
+    updateCategoryByName(new_category_name, old_category_name){
+        return new Promise(async (resolve, reject) => {
+            try {
+                connection.query(`update product_category set category_name = ? where category_name = ?`, [new_category_name, old_category_name], (err, result) => {
+                    if(!err){
+                        return resolve("Category name updated successfully...");
+                    } else {
+                        return reject(error);
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+                return reject(error);
+            }
+        })
+    }
+
+    addNewCategory(category_name){
+        return new Promise(async (resolve, reject) => {
+            try {
+                connection.query(`insert into product_category(category_name) values(?)`,[category_name], (err, result) => {
+                    if(!err){
+                        return resolve("New Product added successfully...");
+                    } else {
+                        return reject(err);
                     }
                 })
             } catch (error) {

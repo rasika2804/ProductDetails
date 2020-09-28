@@ -13,10 +13,10 @@ class ProductDetailsBiz {
         })
     }
 
-    getProductCategoryDetails(category_type) {
+    getProductCategoryDetails() {
         return new Promise(async (resolve, reject) => {
             try {
-                const result = await productRepo.getProductByCategory(category_type);
+                const result = await productRepo.getProductByCategory();
                 return resolve(JSON.parse(JSON.stringify(result)));
             } catch (error) {
                 return reject(error);
@@ -50,6 +50,39 @@ class ProductDetailsBiz {
         return new Promise(async (resolve, reject) =>{
             try {
                 const result = await productRepo.deleteProductDetails(product_name);
+                return resolve(result);
+            } catch (error) {
+                return reject(error);
+            }
+        })
+    }
+
+    getCategoryDetails(){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await productRepo.getCategoryDetails();
+                return resolve(result);
+            } catch (error) {
+                return reject(error);
+            }
+        })
+    }
+    
+    updateCategoryByName(new_category_name, old_category_name){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await productRepo.updateCategoryByName(new_category_name, old_category_name);
+                return resolve(result);
+            } catch (error) {
+                return reject(error);
+            }
+        })
+    }
+
+    addNewCategory(category_name){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await productRepo.addNewCategory(category_name);
                 return resolve(result);
             } catch (error) {
                 return reject(error);

@@ -1,0 +1,5 @@
+# GET http://localhost:8000/getProductByCategory/?page=1&limit=25
+
+# GET http://localhost:8000/getCategoryDetails
+
+PUT http://localhost:8000/updateCategoryName/"Menswear"
